@@ -15,11 +15,11 @@ const sign = async (req, res) => {
     if (existName) return res.status(400).send('نام کاربری تکراری است');
 
     // چک میکنی بیشتر از یکی ادمین نباشه
-    if (typeUser === 'admin') {
-      const existAdmin = await User.findOne({ typeUser: 'admin' });
-      if (existAdmin)
-        return res.status(400).send('بیشتر از یک ادمین نمی‌توان ساخت');
-    }
+    // if (typeUser === 'admin') {
+    //   const existAdmin = await User.findOne({ typeUser: 'admin' });
+    //   if (existAdmin)
+    //     return res.status(400).send('بیشتر از یک ادمین نمی‌توان ساخت');
+    // }
 
     // رمز رو برای امنیت هش میکنی
     const hash = await bcrypt.hash(password, 10);
