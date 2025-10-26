@@ -3,7 +3,7 @@ import { useGetUser } from '../Hooks/useGetUser';
 import { useGetProf } from '../Hooks/useGetProf';
 
 export const Users = () => {
-  const { data, isLoading } = useGetUser();
+  const { data, isLoading, isError } = useGetUser();
   const { mutation } = useDelete();
   const { data: profile } = useGetProf();
 
@@ -18,6 +18,7 @@ export const Users = () => {
             <p>لطفاً منتظر بمانید...</p>
           </div>
         )}
+
         {data
           ?.filter(item => item.name !== profile?.name)
           .map(item => (
@@ -45,6 +46,11 @@ export const Users = () => {
             </div>
           ))}
       </div>
+      {!isLoading && !isError && data?.length === 1 && (
+        <div className="alert alert-warning text-center mt-4 fw-bold">
+          کاربری برای نمایش وجود ندارد
+        </div>
+      )}
     </section>
   );
 };
