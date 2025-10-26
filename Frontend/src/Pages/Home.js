@@ -60,7 +60,7 @@ const Home = () => {
                 <div className="card-body d-flex flex-column">
                   <h5 className="fw-bold">{p.name}</h5>
                   <p className="text-muted">{p.price.toLocaleString()} تومان</p>
-                  {isLog && (
+
                     <Link
                       onClick={() =>
                         mutation.mutate(
@@ -70,11 +70,10 @@ const Home = () => {
                           }
                         )
                       }
-                      className="btn add-btn mt-auto w-100"
+                      className="btn btn-outline-primary mt-auto w-100"
                     >
-                      افزودن به سبد خرید
+                      جزئیات
                     </Link>
-                  )}
                 </div>
               </div>
             </div>
