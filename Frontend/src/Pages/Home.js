@@ -63,7 +63,12 @@ const Home = () => {
                   {isLog && (
                     <Link
                       onClick={() =>
-                        mutation.mutate({ data: p, type: 'product' })
+                        mutation.mutate(
+                          { data: p, type: 'product' },
+                          {
+                            onSuccess: () => (window.location.href = '/cart')
+                          }
+                        )
                       }
                       className="btn add-btn mt-auto w-100"
                     >
@@ -75,7 +80,6 @@ const Home = () => {
             </div>
           ))}
         </div>
-        {mutation.isSuccess && (window.location.href = '/cart')}
 
         {!isLoading && !isError && products?.length === 0 && (
           <div className="alert alert-warning text-center mt-4 fw-bold">
