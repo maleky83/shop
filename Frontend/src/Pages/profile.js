@@ -12,7 +12,7 @@ export const Profile = () => {
     if (!isLoading & !data) {
       Logout();
     }
-  }, [data, isLoading]);
+  }, [data, isLoading,Logout]);
   return (
     <section className="container profile-container">
       <div className="card profile-card text-center">

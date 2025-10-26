@@ -3,7 +3,7 @@ import { useGetUser } from '../Hooks/useGetUser';
 import { useGetProf } from '../Hooks/useGetProf';
 
 export const Users = () => {
-  const { data } = useGetUser();
+  const { data, isLoading } = useGetUser();
   const { mutation } = useDelete();
   const { data: profile } = useGetProf();
 
@@ -12,6 +12,12 @@ export const Users = () => {
       <h3 className="text-center fw-bold mb-4">👤 لیست کاربران</h3>
 
       <div className="row justify-content-center">
+        {isLoading && (
+          <div className="text-center py-5">
+            <div className="spinner-border mb-3"></div>
+            <p>لطفاً منتظر بمانید...</p>
+          </div>
+        )}
         {data
           ?.filter(item => item.name !== profile?.name)
           .map(item => (
