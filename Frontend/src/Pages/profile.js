@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useGetProf } from '../Hooks/useGetProf';
 import { authContext } from '../Components/authContext';
 import { useDelete } from '../Hooks/useDelete';
@@ -7,6 +7,12 @@ export const Profile = () => {
   const { data, isLoading, isError, error } = useGetProf();
   const { Logout } = useContext(authContext);
   const { mutation } = useDelete();
+
+  useEffect(() => {
+    if (!isLoading & !data) {
+      Logout();
+    }
+  }, [data, isLoading]);
   return (
     <section className="container profile-container">
       <div className="card profile-card text-center">
@@ -39,7 +45,6 @@ export const Profile = () => {
               <button
                 onClick={() => {
                   Logout();
-                  window.location.href = '/';
                 }}
                 className="btn btn-outline-primary profile-btn"
               >

@@ -6,6 +6,10 @@ const mongoose = require('mongoose');
 const router = require('./routers/route');
 dotenv.config();
 // اتصال به دیتابیس
+app.use(cors());
+app.use(express.text());
+app.use(express.urlencoded());
+app.use(express.json());
 mongoose
   .connect(process.env.dbURI)
   .then(() => {
@@ -16,8 +20,5 @@ mongoose
   .catch(err => {
     console.log('error' + err);
   });
-
-app.use(cors());
-app.use(express.json());
 
 app.use('/', router);

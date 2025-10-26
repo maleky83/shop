@@ -9,7 +9,7 @@ import { useEdite } from '../Hooks/useEdite';
 export const Details = () => {
   const { handleChange, mutation: edit } = useEdite();
   const { typeUser } = useContext(authContext);
-  const { mutation } = usePost();
+  const { mutation: add } = usePost();
   const { mutation: deleted } = useDelete();
   const { data } = useGetShop();
   const { id } = useParams();
@@ -38,9 +38,13 @@ export const Details = () => {
               <p className="mb-3">{product?.about}</p>
               <Link
                 onClick={() =>
-                  mutation.mutate({ data: product, type: 'product' })
+                  add.mutate(
+                    { data: product, type: 'product' },
+                    {
+                      onSuccess: () => (window.location.href = '/cart')
+                    }
+                  )
                 }
-                to="/Cart"
                 className="btn btn-primary btn-lg mt-3 details-btn"
               >
                 افزودن به سبد خرید
@@ -87,15 +91,23 @@ export const Details = () => {
               <div className="d-flex flex-column gap-2 mt-3">
                 <Link
                   className="btn btn-outline-success w-100"
-                  onClick={() => edit.mutate(product._id)}
+                  onClick={() =>
+                    edit.mutate(product._id, {
+                      onSuccess: () => window.location.reload()
+                    })
+                  }
                 >
                   {edit.isPending ? 'درحال ویرایش' : 'ویرایش محصول'}
                 </Link>
                 <Link
                   className="btn btn-outline-danger w-100"
                   onClick={() => {
-                    deleted.mutate({ type: 'shop', id: product._id });
-                    window.location.href = '/';
+                    deleted.mutate(
+                      { type: 'shop', id: product._id },
+                      {
+                        onSuccess: () => (window.location.href = '/products')
+                      }
+                    );
                   }}
                 >
                   {deleted.isPending ? 'درحال حذف...' : 'حذف محصول'}
@@ -106,8 +118,6 @@ export const Details = () => {
                 <p className="text-danger mt-2">{edit.error.response?.data}</p>
               )}
 
-              {edit.isSuccess && window.location.reload()}
-              {deleted.isSuccess && (window.location.href = '/products')}
               {deleted.isError && (
                 <p className="text-danger mt-2">
                   {deleted.error.response?.data}

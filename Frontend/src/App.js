@@ -13,10 +13,9 @@ import { Profile } from './Pages/profile';
 import { authContext } from './Components/authContext';
 import { useContext } from 'react';
 import { Users } from './Pages/Users';
-import { NotFound } from './Pages/NotFound';
 
 function App() {
-  const { Log, isLog, setIsLog, typeUser } = useContext(authContext);
+  const { isLog, typeUser } = useContext(authContext);
   return (
     <>
       <Header />
@@ -46,7 +45,6 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Sign" element={<Sign />} />
-            <Route path="*" element={<NotFound />} />
           </>
         )}
         <Route path="*" element={<Home />} />

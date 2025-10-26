@@ -1,29 +1,36 @@
+const product = require('../model/product');
 const Product = require('../model/product');
 
 // خرید و افزودن کالا به سبد خرید
-const buyCart = async (req, res) => {
+const buyCart = async (req, res, next) => {
   const { name: productName, price } = req.body;
   const { name: userName } = req.userData;
   // اگر نام مشتری و نام کالا یکی بود به تعداد کالا یکی اضافه میکنه
   const existName = await Product.findOne({ productName, userName });
   if (existName) {
-    return await Product.updateOne({ quantity: existName.quantity + 1 }).catch(
-      err => {
-        res.status(400).send(err);
-      }
-    );
+    return await Product.findByIdAndUpdate(existName.id, {
+      quantity: existName.quantity + 1
+    })
+      .then(() => {
+        return res.send();
+      })
+      .catch(err => {
+        return res.status(400).send(err);
+      });
   }
   // بعد توی سبد ذخیره میکنه
-  new Product({ userName, productName, price, quantity: 1 })
+  await new Product({ userName, productName, price, quantity: 1 })
     .save()
     .catch(err => {
-      res.status(400).send(err);
+      return res.status(400).send(err);
     });
 };
 
 // گرفتن همه محصولات مشتری برای سبد خرید
 const GetCart = async (req, res) => {
   const { name } = req.userData;
+
+  await product.deleteMany({ quantity: { $lte: 0 } });
   Product.find({ userName: name })
     .then(result => {
       res.send(result);
@@ -44,4 +51,18 @@ const deleteCart = async (req, res) => {
     });
 };
 
-module.exports = { deleteCart, GetCart, buyCart };
+const quantityCart = async (req, res) => {
+  const find = await Product.findById(req.body.id);
+  await Product.findByIdAndUpdate(req.body.id, {
+    quantity: req.body.type == 'plus' ? find.quantity + 1 : find.quantity - 1
+  })
+    .then(() => {
+      return res.send();
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(400).send(err);
+    });
+};
+
+module.exports = { deleteCart, GetCart, buyCart, quantityCart };

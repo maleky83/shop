@@ -1,13 +1,30 @@
 import { useDelete } from '../Hooks/useDelete';
 import { useGetProduct } from '../Hooks/useGetProduct';
+import { usePost } from '../Hooks/usePost';
 
 export const Cart = () => {
-  const { data, isError, isLoading, error } = useGetProduct();
-  const { mutation } = useDelete();
+  const { data, isError, isLoading, error, refetch } = useGetProduct();
+  const { mutation: updateQty } = usePost();
+  const { mutation: removeItem } = useDelete();
+
   const total = data?.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
+
+  const handleQty = (id, type) => {
+    updateQty.mutate(
+      { type: 'product/quantity', data: { id, type } },
+      { onSuccess: () => window.location.reload() }
+    );
+  };
+
+  const handleDelete = id => {
+    removeItem.mutate(
+      { type: 'product', id },
+      { onSuccess: () => window.location.reload() }
+    );
+  };
 
   return (
     <section className="container my-5 cart-container">
@@ -32,7 +49,7 @@ export const Cart = () => {
           )}
 
           {data?.length === 0 && !isLoading && (
-            <div className="text-center py-4 text-muted">
+            <div className="empty-cart">
               <p>سبد خرید شما خالی است</p>
             </div>
           )}
@@ -49,23 +66,40 @@ export const Cart = () => {
                     <th></th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {data?.map(item => (
-                    <tr key={item?._id}>
-                      <td>{item?.productName}</td>
-                      <td>{item?.quantity}</td>
-                      <td>{item?.price?.toLocaleString()} تومان</td>
+                    <tr key={item._id}>
+                      <td>{item.productName}</td>
+                      <td>{item.quantity}</td>
+                      <td>{item.price.toLocaleString()} تومان</td>
                       <td>
-                        {(item?.price * item?.quantity).toLocaleString()} تومان
+                        {(item.price * item.quantity).toLocaleString()} تومان
                       </td>
-                      <td>
+
+                      <td className="d-flex gap-1">
                         <button
-                          onClick={() =>
-                            mutation.mutate({ type: 'product', id: item?._id })
-                          }
+                          onClick={() => handleDelete(item._id)}
                           className="btn btn-sm btn-outline-danger rounded-pill"
+                          disabled={removeItem.isPending}
                         >
                           حذف
+                        </button>
+
+                        <button
+                          className="btn btn-sm btn-outline-primary rounded-pill"
+                          onClick={() => handleQty(item._id, 'plus')}
+                          disabled={updateQty.isPending}
+                        >
+                          +
+                        </button>
+
+                        <button
+                          className="btn btn-sm btn-outline-primary rounded-pill"
+                          onClick={() => handleQty(item._id, 'min')}
+                          disabled={updateQty.isPending}
+                        >
+                          -
                         </button>
                       </td>
                     </tr>

@@ -60,19 +60,22 @@ const Home = () => {
                 <div className="card-body d-flex flex-column">
                   <h5 className="fw-bold">{p.name}</h5>
                   <p className="text-muted">{p.price.toLocaleString()} تومان</p>
-                  <Link
-                    onClick={() =>
-                      mutation.mutate({ data: p, type: 'product' })
-                    }
-                    className="btn add-btn mt-auto w-100"
-                  >
-                    افزودن به سبد خرید
-                  </Link>
+                  {isLog && (
+                    <Link
+                      onClick={() =>
+                        mutation.mutate({ data: p, type: 'product' })
+                      }
+                      className="btn add-btn mt-auto w-100"
+                    >
+                      افزودن به سبد خرید
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
           ))}
         </div>
+        {mutation.isSuccess && (window.location.href = '/cart')}
 
         {!isLoading && !isError && products?.length === 0 && (
           <div className="alert alert-warning text-center mt-4 fw-bold">

@@ -25,7 +25,8 @@ const {
 const {
   buyCart,
   GetCart,
-  deleteCart
+  deleteCart,
+  quantityCart
 } = require('../controllers/product-controller');
 
 // router.use(auth);
@@ -43,6 +44,7 @@ router.delete('/user/:id', deleteUser);
 router.get('/user/profile', auth, getProfile);
 // آدرس های درخواست سبد خرید
 router.post('/product', auth, buyCart);
+router.post('/product/quantity', quantityCart);
 router.get('/product', auth, GetCart);
 router.delete('/product/:id', deleteCart);
 
