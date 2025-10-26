@@ -5,18 +5,22 @@ const AddProduct = () => {
     useAddProduct();
 
   return (
-    <section className="container my-5">
+    <section className="container my-5 add-product-container">
       <h2 className="fw-bold text-center mb-4">افزودن محصول جدید</h2>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mx-auto shadow p-4 rounded bg-white"
+        className="mx-auto shadow-lg p-4 rounded-4 bg-white add-product-form"
         style={{ maxWidth: '500px' }}
       >
         {/* Name */}
         <div className="mb-3">
-          <label className="form-label">نام محصول</label>
-          <input {...register('name')} type="text" className="form-control" />
+          <label className="form-label fw-bold">نام محصول</label>
+          <input
+            {...register('name')}
+            type="text"
+            className="form-control rounded-pill"
+          />
           {errors.name && (
             <p className="text-danger small mt-1">{errors.name.message}</p>
           )}
@@ -24,11 +28,11 @@ const AddProduct = () => {
 
         {/* Price */}
         <div className="mb-3">
-          <label className="form-label">قیمت (تومان)</label>
+          <label className="form-label fw-bold">قیمت (تومان)</label>
           <input
             {...register('price')}
             type="number"
-            className="form-control"
+            className="form-control rounded-pill"
           />
           {errors.price && (
             <p className="text-danger small mt-1">{errors.price.message}</p>
@@ -37,8 +41,12 @@ const AddProduct = () => {
 
         {/* About */}
         <div className="mb-3">
-          <label className="form-label">توضیحات</label>
-          <input {...register('about')} type="text" className="form-control" />
+          <label className="form-label fw-bold">توضیحات</label>
+          <input
+            {...register('about')}
+            type="text"
+            className="form-control rounded-pill"
+          />
           {errors.about && (
             <p className="text-danger small mt-1">{errors.about.message}</p>
           )}
@@ -46,8 +54,12 @@ const AddProduct = () => {
 
         {/* Image */}
         <div className="mb-3">
-          <label className="form-label">لینک تصویر</label>
-          <input {...register('img')} type="text" className="form-control" />
+          <label className="form-label fw-bold">لینک تصویر</label>
+          <input
+            {...register('img')}
+            type="text"
+            className="form-control rounded-pill"
+          />
           {errors.img && (
             <p className="text-danger small mt-1">{errors.img.message}</p>
           )}
@@ -55,7 +67,7 @@ const AddProduct = () => {
 
         <button
           type="submit"
-          className="btn btn-success w-100"
+          className="btn btn-success w-100 btn-lg rounded-pill mt-3 add-btn"
           disabled={mutation.isPending}
         >
           {mutation.isPending ? 'در حال افزودن...' : 'افزودن محصول'}

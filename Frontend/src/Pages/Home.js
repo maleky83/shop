@@ -12,18 +12,21 @@ const Home = () => {
   return (
     <>
       {!isLog && (
-        <div className="alert alert-danger text-center m-3 fw-bold">
+        <div className="alert alert-danger text-center m-3 fw-bold animate-fade">
           لطفاً اول وارد حساب کاربری شوید
         </div>
       )}
 
-      <section className="py-5 text-center hero-section">
+      {/* HERO SECTION */}
+      <section className="py-5 text-center hero-home">
         <div className="container">
-          <h1 className="fw-bold mb-3">به فروشگاه ما خوش آمدید 🛍️</h1>
-          <p className="text-muted fs-5">
-            جدیدترین و بهترین محصولات با قیمت عالی
+          <h1 className="fw-bold mb-3 hero-title">
+            به فروشگاه ما خوش آمدید 🛍️
+          </h1>
+          <p className="text-light fs-5">
+            جدیدترین محصولات با بهترین قیمت و ارسال سریع
           </p>
-          <Link to="/Products" className="btn btn-primary btn-lg px-4 mt-2">
+          <Link to="/Products" className="btn hero-btn btn-lg px-4 mt-2">
             مشاهده محصولات
           </Link>
         </div>
@@ -35,7 +38,7 @@ const Home = () => {
 
         {isLoading && (
           <div className="text-center py-5">
-            <div className="spinner-border mb-3" role="status"></div>
+            <div className="spinner-border mb-3"></div>
             <p>لطفاً منتظر بمانید...</p>
           </div>
         )}
@@ -49,7 +52,7 @@ const Home = () => {
         <div className="row g-4">
           {products?.map(p => (
             <div key={p._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-              <div className="card product-card h-100 shadow-sm text-center">
+              <div className="card product-card shadow-sm text-center animate-up">
                 <div className="card-img-wrapper">
                   <img src={p.img} className="card-img-top" alt={p.name} />
                 </div>
@@ -58,11 +61,10 @@ const Home = () => {
                   <h5 className="fw-bold">{p.name}</h5>
                   <p className="text-muted">{p.price.toLocaleString()} تومان</p>
                   <Link
-                    onClick={() => {
-                      mutation.mutate({ data: p, type: 'product' });
-                    }}
-                    // to="/Cart"
-                    className="btn btn-outline-primary mt-auto w-100 add-btn"
+                    onClick={() =>
+                      mutation.mutate({ data: p, type: 'product' })
+                    }
+                    className="btn add-btn mt-auto w-100"
                   >
                     افزودن به سبد خرید
                   </Link>

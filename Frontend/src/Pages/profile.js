@@ -9,51 +9,50 @@ export const Profile = () => {
   const { mutation } = useDelete();
 
   return (
-    <section className="container my-5 d-flex justify-content-center">
-      <div
-        className="card shadow p-4 text-center"
-        style={{ maxWidth: '450px', width: '100%' }}
-      >
-        {isLoading && <p className="text-primary">لطفا منتظر بمانید...</p>}
+    <section className="container profile-container">
+      <div className="card profile-card text-center">
+        {isLoading && <p className="loading-text">لطفا منتظر بمانید...</p>}
         {isError && (
-          <p className="text-danger">
+          <p className="error-text">
             {error?.response?.data || 'خطایی رخ داده'}
           </p>
         )}
 
         {data && (
           <>
-            <h3 className="fw-bold mb-3">پروفایل کاربری</h3>
+            <h3 className="profile-title">پروفایل کاربری</h3>
             <hr />
 
-            <div className="text-end mt-3 gap-1 d-flex flex-column">
+            <div className="profile-info">
               <p>
-                <span className="fw-bold text-secondary">نام کاربری:</span>{' '}
-                {data.name}
+                <span>نام کاربری:</span> {data.name}
               </p>
               <p>
-                <span className="fw-bold text-secondary">نقش:</span>{' '}
+                <span>نقش:</span>{' '}
                 {data.typeUser === 'admin' ? 'ادمین' : 'مشتری'}
               </p>
               <p>
-                <span className="fw-bold text-secondary">ایمیل:</span>{' '}
-                {data.email}
+                <span>ایمیل:</span> {data.email}
               </p>
+            </div>
+
+            <div className="d-flex flex-column gap-2 mt-3">
               <button
                 onClick={() => {
-                  window.location.href = '/';
                   Logout();
+                  window.location.href = '/';
                 }}
-                className="btn btn-outline-danger"
+                className="btn btn-outline-primary profile-btn"
               >
-                خروج
+                خروج از حساب
               </button>
+
               <button
                 onClick={() => {
                   mutation.mutate({ type: 'user', id: data._id });
                   Logout();
                 }}
-                className="btn btn-outline-danger"
+                className="btn btn-outline-danger profile-btn"
               >
                 حذف کامل حساب کاربری
               </button>
@@ -64,3 +63,5 @@ export const Profile = () => {
     </section>
   );
 };
+
+export default Profile;

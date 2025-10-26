@@ -6,9 +6,9 @@ export const Header = () => {
   const { isLog, typeUser } = useContext(authContext);
 
   return (
-    <nav className="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+    <nav className="navbar navbar-expand-lg glass-nav shadow-sm sticky-top">
       <div className="container">
-        <Link className="navbar-brand fw-bold" to="/">
+        <Link className="navbar-brand fw-bold fs-4 brand-logo" to="/">
           🛒 فروشگاه من
         </Link>
 
@@ -22,50 +22,58 @@ export const Header = () => {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarNav">
-          {/* 🟦 لینک‌های سمت راست */}
-          <ul className="navbar-nav ms-auto">
+          {/* RIGHT MENU */}
+          <ul className="navbar-nav ms-auto gap-2">
             {!typeUser && (
               <li className="nav-item">
-                <Link className="nav-link" to="/">
+                <Link className="nav-link nav-item-custom" to="/">
                   خانه
                 </Link>
               </li>
             )}
             <li className="nav-item">
-              <Link className="nav-link" to="/Products">
+              <Link className="nav-link nav-item-custom" to="/Products">
                 محصولات
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/About">
+              <Link className="nav-link nav-item-custom" to="/About">
                 درباره ما
               </Link>
             </li>
 
             {isLog && !typeUser && (
               <li className="nav-item">
-                <Link className="nav-link" to="/Cart">
+                <Link className="nav-link nav-item-custom" to="/Cart">
                   سبد خرید 🛍
                 </Link>
               </li>
             )}
           </ul>
 
-          {/* 🟩 دکمه‌های سمت چپ */}
-          <div className="d-flex gap-2">
-            {/* اگر لاگین بود */}
+          {/* LEFT BUTTONS */}
+          <div className="d-flex gap-2 ms-3">
             {isLog && (
               <>
-                <Link to="/profile" className="btn btn-outline-info">
+                <Link
+                  to="/profile"
+                  className="btn btn-outline-info rounded-pill"
+                >
                   پروفایل
                 </Link>
 
                 {typeUser && (
                   <>
-                    <Link className="btn btn-outline-success" to="/AddProduct">
+                    <Link
+                      className="btn btn-outline-success rounded-pill"
+                      to="/AddProduct"
+                    >
                       افزودن محصول
                     </Link>
-                    <Link className="btn btn-outline-secondary" to="/Users">
+                    <Link
+                      className="btn btn-outline-secondary rounded-pill"
+                      to="/Users"
+                    >
                       مدیریت کاربران
                     </Link>
                   </>
@@ -73,13 +81,18 @@ export const Header = () => {
               </>
             )}
 
-            {/* اگر لاگین نبود */}
             {!isLog && (
               <>
-                <Link to="/Sign" className="btn btn-outline-primary">
+                <Link
+                  to="/Sign"
+                  className="btn btn-outline-primary rounded-pill"
+                >
                   ثبت نام
                 </Link>
-                <Link to="/Login" className="btn btn-outline-secondary">
+                <Link
+                  to="/Login"
+                  className="btn btn-outline-secondary rounded-pill"
+                >
                   ورود
                 </Link>
               </>

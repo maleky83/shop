@@ -5,19 +5,15 @@ export const Sign = () => {
   const { errors, handleSubmit, onSubmit, register, mutation } = useSign();
 
   return (
-    <section className="container my-5">
-      <h2 className="fw-bold text-center mb-4">ثبت نام</h2>
+    <section className="container sign-container">
+      <h2 className="text-center sign-title">ثبت نام</h2>
 
-      <form
-        className="mx-auto"
-        style={{ maxWidth: '400px' }}
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form className="sign-form" onSubmit={handleSubmit(onSubmit)}>
         {/* Name */}
         <div className="mb-3">
           <label className="form-label">نام</label>
           <input {...register('name')} type="text" className="form-control" />
-          {errors.name && <p className="text-danger">{errors.name.message}</p>}
+          {errors.name && <p className="error-text">{errors.name.message}</p>}
         </div>
 
         {/* Password */}
@@ -29,7 +25,7 @@ export const Sign = () => {
             className="form-control"
           />
           {errors.password && (
-            <p className="text-danger">{errors.password.message}</p>
+            <p className="error-text">{errors.password.message}</p>
           )}
         </div>
 
@@ -37,9 +33,7 @@ export const Sign = () => {
         <div className="mb-3">
           <label className="form-label">ایمیل</label>
           <input {...register('email')} type="text" className="form-control" />
-          {errors.email && (
-            <p className="text-danger">{errors.email.message}</p>
-          )}
+          {errors.email && <p className="error-text">{errors.email.message}</p>}
         </div>
 
         {/* User Type */}
@@ -53,19 +47,24 @@ export const Sign = () => {
 
         <button
           type="submit"
-          className="btn btn-primary w-100"
+          className="btn btn-primary w-100 sign-btn"
           disabled={mutation.isPending}
         >
           {mutation.isPending ? 'در حال ثبت نام...' : 'ثبت نام'}
         </button>
       </form>
 
-      {/* Mutation States */}
       {mutation.isError && (
-        <p className="text-danger mt-3">{mutation.error.response?.data}</p>
+        <p className="error-text text-center mt-3">
+          {mutation.error.response?.data}
+        </p>
       )}
-      <p>
-        اگر ثبت نام کردید لطفا روی <Link to="/login">ورود</Link> کلیک کنید
+
+      <p className="text-center mt-3">
+        قبلاً ثبت نام کرده‌اید؟{' '}
+        <Link to="/login" className="link-login">
+          ورود
+        </Link>
       </p>
     </section>
   );
