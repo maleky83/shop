@@ -61,19 +61,19 @@ const Home = () => {
                   <h5 className="fw-bold">{p.name}</h5>
                   <p className="text-muted">{p.price.toLocaleString()} تومان</p>
 
-                    <Link
-                      onClick={() =>
-                        mutation.mutate(
-                          { data: p, type: 'product' },
-                          {
-                            onSuccess: () => (window.location.href = '/cart')
-                          }
-                        )
-                      }
-                      className="btn btn-outline-primary mt-auto w-100"
-                    >
-                      جزئیات
-                    </Link>
+                  <Link
+                    onClick={() =>
+                      mutation.mutate(
+                        { data: p, type: 'product' },
+                        {
+                          onSuccess: () => (window.location.href = '/cart')
+                        }
+                      )
+                    }
+                    className="btn add-btn mt-auto w-100"
+                  >
+                    افزودن به سبد خرید
+                  </Link>
                 </div>
               </div>
             </div>

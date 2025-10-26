@@ -19,13 +19,12 @@ const buyCart = async (req, res, next) => {
       });
   }
   // بعد توی سبد ذخیره میکنه
-  await new Product({ userName, productName, price, quantity: 1 })
-    .save(() => {
-      return res.send();
-    })
-    .catch(err => {
-      return res.status(400).send(err);
-    });
+  try {
+    await new Product({ userName, productName, price, quantity: 1 }).save();
+    return res.send();
+  } catch (err) {
+    return res.status(400).send(err);
+  }
 };
 
 // گرفتن همه محصولات مشتری برای سبد خرید
