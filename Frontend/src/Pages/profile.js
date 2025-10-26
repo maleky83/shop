@@ -7,7 +7,7 @@ export const Profile = () => {
   const { data, isLoading, isError, error } = useGetProf();
   const { Logout } = useContext(authContext);
   const { mutation } = useDelete();
-
+  console.log(data);
   return (
     <section className="container profile-container">
       <div className="card profile-card text-center">
