@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { data, Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { authContext } from '../Components/authContext';
 import { useGetShop } from '../Hooks/useGetShop';
@@ -6,7 +6,7 @@ import { usePost } from '../Hooks/usePost';
 
 const Home = () => {
   const { data: products, error, isError, isLoading } = useGetShop();
-  const { isLog } = useContext(authContext);
+  const { isLog, typeUser } = useContext(authContext);
   const { mutation } = usePost();
 
   return (
@@ -60,19 +60,22 @@ const Home = () => {
                 <div className="card-body d-flex flex-column">
                   <h5 className="fw-bold">{p.name}</h5>
                   <p className="text-muted">{p.price.toLocaleString()} تومان</p>
-                  {isLog && (
+
+                  {isLog ? (
                     <Link
-                      onClick={() =>
-                        mutation.mutate(
-                          { data: p, type: 'product' },
-                          {
-                            onSuccess: () => (window.location.href = '/cart')
-                          }
-                        )
-                      }
-                      className="btn add-btn mt-auto w-100"
+                      to={`/details/${p._id}`}
+                      className="btn btn-outline-primary mt-auto w-100 product-btn"
                     >
-                      افزودن به سبد خرید
+                      مشاهده جزئیات
+                    </Link>
+                  ) : (
+                    <Link
+                      onClick={() => {
+                        window.location.href = '/';
+                      }}
+                      className="btn btn-outline-primary mt-auto w-100 product-btn"
+                    >
+                      مشاهده جزئیات
                     </Link>
                   )}
                 </div>
