@@ -36,10 +36,14 @@ const getProduct = async (req, res, next) => {
 
 // حذف محصول توسط ادمین
 const deleteProduct = async (req, res, next) => {
-  Shop.findByIdAndDelete(req.params.id).catch(err => {
-    console.log(err);
-    res.status(401).send(err);
-  });
+  Shop.findByIdAndDelete(req.params.id)
+    .then(() => {
+      return res.send();
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(401).send(err);
+    });
 };
 
 // ویرایش محصول توسط ادمین
